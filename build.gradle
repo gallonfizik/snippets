@@ -4,4 +4,37 @@ buildscript {
             url "https://plugins.gradle.org/m2/"
         }
     }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_gradle_plugin_version}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'java-test-fixtures'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = 17
+targetCompatibility = 17
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.junit:junit-bom:${junit_bom_version}")
+    }
+}
+
+dependencies {
+    testImplementation("org.assertj:assertj-core:${assertj_version}")
+    testImplementation('org.junit.jupiter:junit-jupiter-api')
+    testImplementation('org.junit.jupiter:junit-jupiter-engine')
+    testImplementation("org.mockito:mockito-core:${mockito_version}")
+    testImplementation("org.mockito:mockito-junit-jupiter:${mockito_version}")
+}
+
+test {
+    useJUnitPlatform()
 }
